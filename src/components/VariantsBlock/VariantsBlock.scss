@@ -1,0 +1,17 @@
+.bird-variants {
+  .list-group {
+    &-item:hover {
+      cursor: pointer;
+      background-color: #444;
+    }
+  }
+  span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 15px;
+    border-radius: 50%;
+    transition: .1s;
+    background-color: #444;
+  }
+}

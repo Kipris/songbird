@@ -1,0 +1,26 @@
+header {
+  display: flex;
+  flex-direction: column;
+  margin-top: .5rem;
+}
+
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.logo {
+  line-height: 0;
+  img {
+    width: 200px;
+    height: auto;
+  }
+}
+
+h5 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}

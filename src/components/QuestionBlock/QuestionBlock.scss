@@ -1,0 +1,38 @@
+.random-bird {
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 25px;
+  background-color: #303030;
+  .list-group {
+    margin-left: 40px;
+    &-item {
+      border: none;
+      padding: .25rem;
+    }
+    &-item:first-child {
+      border-bottom: 1px solid #555;
+    }
+  }
+}
+
+.list-group {
+  text-align: left;
+  &-item {
+    background-color: #303030;
+    border-color: #555;
+  }
+}
+
+.audio-player {
+  margin: 10px 40px 8px 0;
+  width: 100%;
+  min-width: 100px;
+}
+
+audio::-webkit-media-controls-enclosure {
+  background-color: transparent;
+}
+
+audio::-webkit-media-controls-play-button {
+  
+}
