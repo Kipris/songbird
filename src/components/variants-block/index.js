@@ -2,15 +2,17 @@ import React from 'react';
 import './variants-block.scss';
 import { ListGroup } from 'react-bootstrap';
 
-const VariantsBlock = () => {
+const VariantsBlock = ({ birdData, correctAnswerId, click }) => {
   return (
     <ListGroup className="bird-variants">
-      <ListGroup.Item><span></span>Зяблик</ListGroup.Item>
-      <ListGroup.Item><span></span>Клёст</ListGroup.Item>
-      <ListGroup.Item><span></span>Горлица</ListGroup.Item>
-      <ListGroup.Item><span></span>Дятел</ListGroup.Item>
-      <ListGroup.Item><span></span>Удод</ListGroup.Item>
-      <ListGroup.Item><span></span>Стриж</ListGroup.Item>
+      {birdData.map(({ name, id }) => (
+        <ListGroup.Item
+          key={id}
+          onClick={() => click(id - 1)}>
+          <span></span>
+          {name}
+        </ListGroup.Item>
+      ))}
     </ListGroup>
   );
 }

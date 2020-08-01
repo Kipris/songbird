@@ -1,9 +1,13 @@
 import React from 'react';
 import './button.scss';
 
-const Button = () => {
+const Button = ({ disabled, click }) => {
   return (
-    <button className="btn">Next level</button>
+    <button
+      type="button"
+      onClick={click}
+      className={["btn", disabled ? "" : "btn-success"].join(" ")}
+      disabled={disabled}>Next level</button>
   );
 }
  
