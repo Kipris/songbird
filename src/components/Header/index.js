@@ -1,11 +1,11 @@
 import React from 'react';
-import './Header.scss';
+import './header.scss';
 import logo from './sb_logo.svg';
-import QuestionList from './QuestionList';
+import QuestionList from './question-list';
 
 const Header = () => {
   return (
-    <header>
+    <header className="header d-flex">
       <div className="top-panel">
         <div className="logo">
           <img src={logo} alt="Songbird Logo" />

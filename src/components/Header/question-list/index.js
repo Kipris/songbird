@@ -1,10 +1,10 @@
 import React from 'react';
-import './QuestionList.scss';
+import './question-list.scss';
 
 const QuestionList = () => {
   return (
-    <nav className="navigation">
-      <a href="#">Разминка</a>
+    <nav className="navigation d-flex">
+      <a href="#" className="active">Разминка</a>
       <a href="#">Воробьиные</a>
       <a href="#">Лесные птицы</a>
       <a href="#">Певчие птицы</a>

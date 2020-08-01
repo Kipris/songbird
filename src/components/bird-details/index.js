@@ -1,5 +1,5 @@
 import React from 'react';
-import './BirdDetails.scss';
+import './bird-details.scss';
 import { Card } from 'react-bootstrap';
 
 const BirdDetails = () => {

@@ -10,16 +10,8 @@
       padding: .25rem;
     }
     &-item:first-child {
-      border-bottom: 1px solid #555;
+      border-bottom: 1px solid #444;
     }
-  }
-}
-
-.list-group {
-  text-align: left;
-  &-item {
-    background-color: #303030;
-    border-color: #555;
   }
 }
 
@@ -31,8 +23,4 @@
 
 audio::-webkit-media-controls-enclosure {
   background-color: transparent;
-}
-
-audio::-webkit-media-controls-play-button {
-  
 }

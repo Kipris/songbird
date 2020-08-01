@@ -1,5 +1,5 @@
 import React from 'react';
-import './VariantsBlock.scss';
+import './variants-block.scss';
 import { ListGroup } from 'react-bootstrap';
 
 const VariantsBlock = () => {
