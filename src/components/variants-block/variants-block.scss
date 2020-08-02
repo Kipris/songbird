@@ -13,5 +13,11 @@
     border-radius: 50%;
     transition: .1s;
     background-color: #444;
+    &.correct {
+      background-color: #00bc8c;
+    }
+    &.incorrect {
+      background-color: red;
+    }
   }
 }

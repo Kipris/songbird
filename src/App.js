@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Header from './components/header';
 import QuestionBlock from './components/question-block';
 import VariantsBlock from './components/variants-block';
@@ -7,9 +7,12 @@ import Button from './components/button';
 import BirdAPIService from './services/bird-api-service';
 import { Container, Row, Col } from 'react-bootstrap';
 
-class App extends Component {
+class App extends PureComponent {
   constructor() {
     super();
+    // gameInfo
+    // roundInfo
+    // birdInfo
     this.state = {
       score: 0,
       currentGroupId: 0,
@@ -17,7 +20,9 @@ class App extends Component {
       triesCount: 0,
       birdGroups: ['warmup', 'passerines', 'forest', 'songbirds', 'predators', 'sea'],
       birdData: null,
-      chosenAnswerId: null
+      chosenAnswerId: null,
+      indicatorClasses: new Array(6),
+      isRoundGuessed: false,
     }
   }
 
@@ -45,22 +50,28 @@ class App extends Component {
   );
 
   handleChooseBird = (id) => {
-    this.setState((state) => ({ chosenAnswerId: id, triesCount: state.triesCount + 1}), () => {
-      const { triesCount } = this.state;
-      if (triesCount === 1) {
-        this.setState((state) => ({ ...state, score: state.score + 5}))
-      } else if (triesCount === 2) {
-        this.setState((state) => ({ ...state, score: state.score + 4}))
-      } else if (triesCount === 3) {
-        this.setState((state) => ({ ...state, score: state.score + 3}))
-      } else if (triesCount === 4) {
-        this.setState((state) => ({ ...state, score: state.score + 2}))
-      } else if (triesCount === 5) {
-        this.setState((state) => ({ ...state, score: state.score + 1}))
-      } else {
-        return;
-      }
-    })
+    const maxScore = 5;
+    const { correctAnswerId, indicatorClasses, isRoundGuessed } = this.state;
+    const updatedClasses = [...indicatorClasses];
+    if (correctAnswerId !== id) {
+      updatedClasses[id] = 'incorrect';
+      this.setState((state) => ({
+        ...state,
+        chosenAnswerId: id,
+        triesCount: isRoundGuessed || state.triesCount + 1,
+        indicatorClasses: updatedClasses
+      }))
+      return;
+    } 
+    updatedClasses[id] = 'correct';
+    this.setState((state) => ({
+      ...state,
+      score: state.score + maxScore - state.triesCount,
+      chosenAnswerId: id,
+      triesCount: isRoundGuessed || state.triesCount + 1,
+      indicatorClasses: updatedClasses,
+      isRoundGuessed: true
+    }))
   }
 
   handleGoNextLevel = () => {
@@ -69,14 +80,15 @@ class App extends Component {
       currentGroupId: state.currentGroupId + 1,
       correctAnswerId: this.getCorrectAnswerId(),
       triesCount: 0,
-      chosenAnswerId: null
+      chosenAnswerId: null,
+      indicatorClasses: new Array(6),
     }), () => {
       this.fetchBirdData();
     })
   }
   
   render() {
-    const { score, birdData, currentGroupId, correctAnswerId, chosenAnswerId } = this.state;
+    const { score, birdData, currentGroupId, correctAnswerId, chosenAnswerId, indicatorClasses, isRoundGuessed } = this.state;
     console.log(this.state);
     return (
       <Container>
@@ -92,6 +104,7 @@ class App extends Component {
                 <VariantsBlock
                   birdData={birdData}
                   correctAnswerId={correctAnswerId}
+                  indicatorClasses={indicatorClasses}
                   click={this.handleChooseBird} />
               </Col>
               <Col>
@@ -101,7 +114,7 @@ class App extends Component {
               </Col>
               <Button
                 click={this.handleGoNextLevel}
-                disabled={correctAnswerId !== chosenAnswerId} />
+                disabled={!isRoundGuessed} />
             </Row>
           </> :
         null }
