@@ -16,4 +16,4 @@ const QuestionList = ({currentGroupId}) => {
   );
 }
  
-export default QuestionList;
+export default React.memo(QuestionList);

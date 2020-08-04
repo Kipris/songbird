@@ -11,4 +11,4 @@ const Button = ({ disabled, click }) => {
   );
 }
  
-export default Button;
+export default React.memo(Button);

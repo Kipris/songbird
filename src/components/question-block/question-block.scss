@@ -4,7 +4,8 @@
   margin-bottom: 25px;
   background-color: #303030;
   .list-group {
-    margin-left: 40px;
+    flex: 1;
+    margin: 0 40px;
     &-item {
       border: none;
       padding: .25rem;

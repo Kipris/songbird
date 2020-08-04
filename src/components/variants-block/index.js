@@ -5,11 +5,11 @@ import { ListGroup } from 'react-bootstrap';
 const VariantsBlock = ({ birdData, correctAnswerId, indicatorClasses, click }) => {
   return (
     <ListGroup className="bird-variants">
-      {birdData.map(({ name, id }) => (
+      {birdData.map(({ name }, id) => (
         <ListGroup.Item
           key={id}
-          onClick={() => click(id - 1)}>
-          <span className={indicatorClasses[id - 1]}></span>
+          onClick={() => click(id)}>
+          <span className={indicatorClasses[id]}></span>
           {name}
         </ListGroup.Item>
       ))}
@@ -17,4 +17,4 @@ const VariantsBlock = ({ birdData, correctAnswerId, indicatorClasses, click }) =
   );
 }
 
-export default VariantsBlock;
+export default React.memo(VariantsBlock);

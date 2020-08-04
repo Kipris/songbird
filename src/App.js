@@ -50,26 +50,29 @@ class App extends PureComponent {
   );
 
   handleChooseBird = (id) => {
-    const maxScore = 5;
     const { correctAnswerId, indicatorClasses, isRoundGuessed } = this.state;
+    const shoudUpdate = correctAnswerId === id;
     const updatedClasses = [...indicatorClasses];
-    if (correctAnswerId !== id) {
-      updatedClasses[id] = 'incorrect';
-      this.setState((state) => ({
-        ...state,
-        chosenAnswerId: id,
-        triesCount: isRoundGuessed || state.triesCount + 1,
-        indicatorClasses: updatedClasses
-      }))
-      return;
-    } 
-    updatedClasses[id] = 'correct';
+    if (!isRoundGuessed) {
+      updatedClasses[id] = correctAnswerId !== id ? 'incorrect' : 'correct';
+    }
     this.setState((state) => ({
       ...state,
-      score: state.score + maxScore - state.triesCount,
       chosenAnswerId: id,
-      triesCount: isRoundGuessed || state.triesCount + 1,
+      triesCount: state.triesCount + 1,
       indicatorClasses: updatedClasses,
+    }), () => this.handleUpdateScore(shoudUpdate))
+  }
+
+  handleUpdateScore = (shoudUpdate) => {
+    const maxScore = 5;
+    const { isRoundGuessed } = this.state;
+    if (isRoundGuessed || !shoudUpdate) {
+      return;
+    }
+    this.setState((state) => ({
+      ...state,
+      score: state.score + maxScore - state.triesCount + 1,
       isRoundGuessed: true
     }))
   }
@@ -82,6 +85,7 @@ class App extends PureComponent {
       triesCount: 0,
       chosenAnswerId: null,
       indicatorClasses: new Array(6),
+      isRoundGuessed: false,
     }), () => {
       this.fetchBirdData();
     })

@@ -7,8 +7,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin: 15px 0;
 }
 
 .logo {
@@ -20,6 +19,6 @@ header {
 }
 
 h5 {
-  font-size: 1rem;
-  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  margin: 0 0 0.9rem;
 }
