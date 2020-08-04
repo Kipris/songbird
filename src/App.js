@@ -60,6 +60,7 @@ class App extends PureComponent {
         ...incorrectAnswerState
       }
     }, () => {
+      if (isRoundGuessed) return;
       playerRef.current.audio.current.play();
     })
   }
@@ -90,6 +91,8 @@ class App extends PureComponent {
         { ostData ?
           <>
             <QuestionBlock 
+              correctAnswerId={isRoundGuessed ? correctAnswerId : null}
+              groupData={groupData}
               correctAnswerAudio={groupData[correctAnswerId].audio} />
             <Row>
               <Col>

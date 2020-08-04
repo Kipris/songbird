@@ -4,13 +4,15 @@ import Player from '../player';
 import img from './default.jpg';
 import './question-block.scss';
 
-const QuestionBlock = ({ correctAnswerAudio }) => {
+const QuestionBlock = ({ correctAnswerId, groupData, correctAnswerAudio }) => {
+  const data = groupData[correctAnswerId];
+  const isCorrectAnswer = Number.isInteger(correctAnswerId);
   return (
     <Jumbotron className="random-ost">
-      <Image src={img} rounded />
+      <Image src={isCorrectAnswer ? data.image : img} rounded />
       <ListGroup>
         <ListGroup.Item>
-          <h3>******</h3>
+          <h3>{isCorrectAnswer ? `"${data.trackName}" из фильма ${data.filmName}` : "******"}</h3>
         </ListGroup.Item>
         <ListGroup.Item>
           <div className="audio-player">
