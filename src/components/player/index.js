@@ -3,18 +3,17 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import './player.scss';
 
-const Player = ({ src }) => {
-  const additional = [];
-  return (
-    <AudioPlayer
-      src={src}
-      autoPlay="false"
-      autoPlayAfterSrcChange="false"
-      showJumpControls="false"
-      customAdditionalControls={additional}
-      customVolumeControls={additional}
-    />
-  )
-};
+const Player = React.forwardRef(({ src, hidden = false }, ref) => (
+  <AudioPlayer
+    ref={ref}
+    style={hidden ? {display: "none"} : {}}
+    src={src}
+    autoPlay={false}
+    autoPlayAfterSrcChange={false}
+    showJumpControls={false}
+    customAdditionalControls={[]}
+    customVolumeControls={[]}
+  />
+))
 
 export default React.memo(Player);

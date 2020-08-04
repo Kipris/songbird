@@ -1,37 +1,37 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import Player from '../player';
-import './bird-details.scss';
+import './details.scss';
 
-const BirdDetails = ({ isAnswerChosen, birdData }) => {
+const Details = ({ isAnswerChosen, ostData }) => {
   return (
-    <Card className="bird-details">
+    <Card className="details">
       { Number.isInteger(isAnswerChosen) ?
         <>
           <div className="card-body">
-            <img className="bird-image" src={birdData.image} alt={birdData.name} />
+            <img src={ostData.image} alt={ostData.filmName} />
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
-                <h4>{birdData.name}</h4>
+                <h4>{ostData.filmName}</h4>
               </li>
               <li className="list-group-item">
-                <span>{birdData.species}</span>
+                <span>{ostData.trackName}</span>
               </li>
               <li className="list-group-item">
                 <div className="audio-player">
-                  <Player src={birdData.audio} />
+                  <Player src={ostData.audio} />
                 </div>
               </li>
             </ul>
           </div>
-          <p>{birdData.description}</p>
+          <p>{ostData.description}</p>
         </> :
         <p className="instruction">
-          <span>Послушайте плеер. Выберите птицу из списка</span>
+          <span>Послушайте плеер. Выберите саундтрек из списка фильмов, сериалов или игр.</span>
         </p>
       }
     </Card>
   );
 }
 
-export default React.memo(BirdDetails);
+export default React.memo(Details);

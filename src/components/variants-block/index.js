@@ -1,20 +1,36 @@
-import React from 'react';
-import './variants-block.scss';
+import React, { PureComponent } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import Player from '../player';
+import './variants-block.scss';
 
-const VariantsBlock = ({ birdData, correctAnswerId, indicatorClasses, click }) => {
-  return (
-    <ListGroup className="bird-variants">
-      {birdData.map(({ name }, id) => (
-        <ListGroup.Item
-          key={id}
-          onClick={() => click(id)}>
-          <span className={indicatorClasses[id]}></span>
-          {name}
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
-  );
+class VariantsBlock extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.playerRef = React.createRef();
+  }
+
+  render() {
+    const { ostData, indicatorClasses, src, click } = this.props;
+    return (
+      <>
+        <ListGroup className="ost-variants">
+          {ostData.map(({ filmName }, id) => (
+            <ListGroup.Item
+              key={id}
+              onClick={() => click(id, this.playerRef)}>
+              <span className={indicatorClasses[id]}></span>
+              {filmName}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+        <Player
+          ref={this.playerRef}
+          hidden={true}
+          autoplay={true}
+          src={src} />
+      </>
+    );
+  }
 }
 
-export default React.memo(VariantsBlock);
+export default VariantsBlock;

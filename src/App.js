@@ -2,79 +2,66 @@ import React, { PureComponent } from 'react';
 import Header from './components/header';
 import QuestionBlock from './components/question-block';
 import VariantsBlock from './components/variants-block';
-import BirdDetails from './components/bird-details';
+import Details from './components/details';
 import Button from './components/button';
-import BirdAPIService from './services/bird-api-service';
 import { Container, Row, Col } from 'react-bootstrap';
+import data from './3.json';
+import correctAudio from './sounds/tada.mp3';
+import incorrectAudio from './sounds/no.mp3';
 
 class App extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // gameInfo
     // roundInfo
-    // birdInfo
+    // ostInfo
     this.state = {
       score: 0,
       currentGroupId: 0,
       correctAnswerId: this.getCorrectAnswerId(),
       triesCount: 0,
-      birdGroups: ['warmup', 'passerines', 'forest', 'songbirds', 'predators', 'sea'],
-      birdData: null,
+      ostGroups: Object.keys(data),
+      ostData: data,
       chosenAnswerId: null,
       indicatorClasses: new Array(6),
       isRoundGuessed: false,
+      sound: '',
     }
   }
 
-  componentDidMount() {
-    this.fetchBirdData();
-  }
-
-  fetchBirdData = () => {
-    const { currentGroupId } = this.state;
-    const birdService = new BirdAPIService();
-    const baseUrl = 'https://songbird-5d0ab.firebaseio.com/';
-    birdService.getBirdGroup(`${baseUrl}${this.state.birdGroups[currentGroupId]}.json`)
-      .then((data) => {
-        this.setState({ 
-          birdData: data,
-        });
-      })
-      .catch((error) => {
-        console.error('Could not fetch', error);
-      });
-  }
-
-  getCorrectAnswerId = (min = 0, max = 5) => (
+  getCorrectAnswerId = (min = 0, max = 3) => (
     Math.floor(Math.random() * (max - min + 1)) + min
   );
 
-  handleChooseBird = (id) => {
+  handleChooseOst = (id, playerRef) => {
     const { correctAnswerId, indicatorClasses, isRoundGuessed } = this.state;
-    const shoudUpdate = correctAnswerId === id;
+    const maxScore = 5;
+    const isAnswerCorrect = correctAnswerId === id;
     const updatedClasses = [...indicatorClasses];
     if (!isRoundGuessed) {
-      updatedClasses[id] = correctAnswerId !== id ? 'incorrect' : 'correct';
+      updatedClasses[id] = isAnswerCorrect ? 'correct' : 'incorrect';
     }
-    this.setState((state) => ({
-      ...state,
-      chosenAnswerId: id,
-      triesCount: state.triesCount + 1,
-      indicatorClasses: updatedClasses,
-    }), () => this.handleUpdateScore(shoudUpdate))
-  }
-
-  handleUpdateScore = (shoudUpdate) => {
-    const maxScore = 5;
-    const { isRoundGuessed } = this.state;
-    if (isRoundGuessed || !shoudUpdate) {
-      return;
-    }
-    this.setState((state) => ({
-      ...state,
-      score: state.score + maxScore - state.triesCount + 1,
-      isRoundGuessed: true
-    }))
+    this.setState((state) => {
+      const updatedState = {
+        ...state,
+        chosenAnswerId: id,
+        triesCount: state.triesCount + 1,
+        indicatorClasses: updatedClasses,
+      }
+      const correctAnswerState = isAnswerCorrect && !isRoundGuessed ? 
+        { score: state.score + maxScore - state.triesCount,
+          isRoundGuessed: true,
+          sound: correctAudio } : { };
+      
+      const incorrectAnswerState = !isAnswerCorrect && !isRoundGuessed ? { sound: incorrectAudio } : {};
+      return {
+        ...updatedState,
+        ...correctAnswerState,
+        ...incorrectAnswerState
+      }
+    }, () => {
+      playerRef.current.audio.current.play();
+    })
   }
 
   handleGoNextLevel = () => {
@@ -86,35 +73,37 @@ class App extends PureComponent {
       chosenAnswerId: null,
       indicatorClasses: new Array(6),
       isRoundGuessed: false,
-    }), () => {
-      this.fetchBirdData();
-    })
+      sound: ''
+    }))
   }
   
   render() {
-    const { score, birdData, currentGroupId, correctAnswerId, chosenAnswerId, indicatorClasses, isRoundGuessed } = this.state;
+    const { score, ostData, ostGroups, currentGroupId, correctAnswerId, chosenAnswerId, indicatorClasses, isRoundGuessed, sound } = this.state;
+    const groupName = ostGroups[currentGroupId];
+    const groupData = ostData[groupName];
     console.log(this.state);
     return (
       <Container>
         <Header
           score={score}
           currentGroupId={currentGroupId} />
-        { birdData ?
+        { ostData ?
           <>
             <QuestionBlock 
-              correctAnswerAudio={birdData[correctAnswerId].audio} />
+              correctAnswerAudio={groupData[correctAnswerId].audio} />
             <Row>
               <Col>
                 <VariantsBlock
-                  birdData={birdData}
+                  src={sound}
+                  ostData={groupData}
                   correctAnswerId={correctAnswerId}
                   indicatorClasses={indicatorClasses}
-                  click={this.handleChooseBird} />
+                  click={this.handleChooseOst} />
               </Col>
               <Col>
-                <BirdDetails
+                <Details
                   isAnswerChosen={chosenAnswerId}
-                  birdData={birdData[chosenAnswerId]} />
+                  ostData={groupData[chosenAnswerId]} />
               </Col>
               <Button
                 click={this.handleGoNextLevel}

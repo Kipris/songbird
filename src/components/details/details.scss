@@ -1,4 +1,4 @@
-.bird-details {
+.details {
   height: 100%;
   padding: 1rem;
   border-color: #444;
@@ -9,7 +9,7 @@
   .list-group {
     width: calc(100% - 240px);
   }
-  .bird-image {
+  img {
     width: 200px;
     height: 155px;
     border-radius: 10px;
@@ -31,7 +31,7 @@
 }
 
 @media (min-width: 993px) {
-  .bird-details {
+  .details {
     .card-body {
       margin-bottom: 20px;
     }
@@ -39,8 +39,8 @@
 }
 
 @media (max-width: 992px) {
-  .bird-details {
-    .bird-image {
+  .details {
+    img {
       display: block;
       margin: 0 auto 25px;
     }
