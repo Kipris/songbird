@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron, Image, ListGroup } from 'react-bootstrap';
 import Player from '../player';
-import img from './default.jpg';
+import img from '../../assets/images/default.jpg';
 import './question-block.scss';
 
 const QuestionBlock = ({ correctAnswerId, groupData, correctAnswerAudio }) => {

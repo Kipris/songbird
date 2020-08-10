@@ -1,24 +1,23 @@
 import React, { PureComponent } from 'react';
+import { Container } from 'react-bootstrap';
+import { getCorrectAnswerId } from './utils';
+
 import Header from './components/header';
-import QuestionBlock from './components/question-block';
-import VariantsBlock from './components/variants-block';
-import Details from './components/details';
-import Button from './components/button';
-import { Container, Row, Col } from 'react-bootstrap';
-import data from './3.json';
-import correctAudio from './sounds/tada.mp3';
-import incorrectAudio from './sounds/no.mp3';
+import GameBlocks from './containers/game-blocks';
+import FinishBlocks from './containers/finish-blocks';
+
+import data from './assets/data/data.json';
+import correctAudio from './assets/sounds/tada.mp3';
+import incorrectAudio from './assets/sounds/no.mp3';
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    // gameInfo
-    // roundInfo
-    // ostInfo
     this.state = {
       score: 0,
+      maxRoundScore: 5,
       currentGroupId: 0,
-      correctAnswerId: this.getCorrectAnswerId(),
+      correctAnswerId: getCorrectAnswerId(),
       triesCount: 0,
       ostGroups: Object.keys(data),
       ostData: data,
@@ -29,13 +28,8 @@ class App extends PureComponent {
     }
   }
 
-  getCorrectAnswerId = (min = 0, max = 3) => (
-    Math.floor(Math.random() * (max - min + 1)) + min
-  );
-
-  handleChooseOst = (id, playerRef) => {
-    const { correctAnswerId, indicatorClasses, isRoundGuessed } = this.state;
-    const maxScore = 5;
+  handleChooseOst = (id, soundRef) => {
+    const { correctAnswerId, maxRoundScore, indicatorClasses, isRoundGuessed } = this.state;
     const isAnswerCorrect = correctAnswerId === id;
     const updatedClasses = [...indicatorClasses];
     if (!isRoundGuessed) {
@@ -49,7 +43,7 @@ class App extends PureComponent {
         indicatorClasses: updatedClasses,
       }
       const correctAnswerState = isAnswerCorrect && !isRoundGuessed ? 
-        { score: state.score + maxScore - state.triesCount,
+        { score: state.score + maxRoundScore - state.triesCount,
           isRoundGuessed: true,
           sound: correctAudio } : { };
       
@@ -61,59 +55,83 @@ class App extends PureComponent {
       }
     }, () => {
       if (isRoundGuessed) return;
-      playerRef.current.audio.current.play();
+      soundRef.current.audio.current.play();
     })
   }
 
   handleGoNextLevel = () => {
+    const { currentGroupId, ostGroups } = this.state;
+    if (currentGroupId === ostGroups.length) {
+      this.handleCongratulations();
+      return;
+    }
+    const resetedSettings = this.getResetedSettings();
     this.setState((state) => ({
       ...state,
       currentGroupId: state.currentGroupId + 1,
-      correctAnswerId: this.getCorrectAnswerId(),
-      triesCount: 0,
-      chosenAnswerId: null,
-      indicatorClasses: new Array(6),
-      isRoundGuessed: false,
-      sound: ''
-    }))
+      ...resetedSettings,
+    }));
+  }
+
+  getResetedSettings = () => ({
+    correctAnswerId: getCorrectAnswerId(),
+    triesCount: 0,
+    chosenAnswerId: null,
+    indicatorClasses: new Array(6),
+    isRoundGuessed: false,
+    sound: '',
+  });
+
+  handleStartNewGame = () => {
+    const resetedSettings = this.getResetedSettings();
+    this.setState((state) => ({
+      ...state,
+      currentGroupId: 0,
+      ...resetedSettings,
+    }));
+  }
+
+  renderGameBlocks = () => {
+    const { ostData, ostGroups, currentGroupId, correctAnswerId, chosenAnswerId, indicatorClasses, isRoundGuessed, sound } = this.state;
+    return (
+      <GameBlocks
+        ostData={ostData}
+        ostGroups={ostGroups}
+        currentGroupId={currentGroupId}
+        correctAnswerId={correctAnswerId}
+        chosenAnswerId={chosenAnswerId}
+        indicatorClasses={indicatorClasses}
+        isRoundGuessed={isRoundGuessed}
+        sound={sound}
+        handleChooseOst={this.handleChooseOst}
+        handleGoNextLevel={this.handleGoNextLevel}
+      />
+    )
+  };
+
+  renderFinishGameBlocks = () => {
+    const { score, maxRoundScore, ostGroups } = this.state;
+    return (
+      <FinishBlocks
+        score={score}
+        maxRoundScore={maxRoundScore}
+        ostGroups={ostGroups}
+        handleStartNewGame={this.handleStartNewGame}
+      />
+    )
   }
   
   render() {
-    const { score, ostData, ostGroups, currentGroupId, correctAnswerId, chosenAnswerId, indicatorClasses, isRoundGuessed, sound } = this.state;
-    const groupName = ostGroups[currentGroupId];
-    const groupData = ostData[groupName];
+    const { score, currentGroupId, ostGroups } = this.state;
     console.log(this.state);
     return (
       <Container>
         <Header
           score={score}
           currentGroupId={currentGroupId} />
-        { ostData ?
-          <>
-            <QuestionBlock 
-              correctAnswerId={isRoundGuessed ? correctAnswerId : null}
-              groupData={groupData}
-              correctAnswerAudio={groupData[correctAnswerId].audio} />
-            <Row>
-              <Col>
-                <VariantsBlock
-                  src={sound}
-                  ostData={groupData}
-                  correctAnswerId={correctAnswerId}
-                  indicatorClasses={indicatorClasses}
-                  click={this.handleChooseOst} />
-              </Col>
-              <Col>
-                <Details
-                  isAnswerChosen={chosenAnswerId}
-                  ostData={groupData[chosenAnswerId]} />
-              </Col>
-              <Button
-                click={this.handleGoNextLevel}
-                disabled={!isRoundGuessed} />
-            </Row>
-          </> :
-        null }
+        {currentGroupId === ostGroups.length ?
+          this.renderFinishGameBlocks() :
+          this.renderGameBlocks()}
       </Container>
     );
   }

@@ -27,7 +27,7 @@ const Details = ({ isAnswerChosen, ostData }) => {
           <p>{ostData.description}</p>
         </> :
         <p className="instruction">
-          <span>Послушайте плеер. Выберите саундтрек из списка фильмов, сериалов или игр.</span>
+          <span>Послушайте плеер. Выберите фильм, сериал или игру, соответствующую саундтреку.</span>
         </p>
       }
     </Card>

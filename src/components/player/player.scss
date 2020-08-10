@@ -65,13 +65,13 @@
     }
     &[aria-label="Play"] {
       &::after {
-        content: url(./play.svg);
+        content: url(../../assets/images/play.svg);
         top: 0;
       }
     }
     &[aria-label="Pause"] {
       &::after {
-        content: url(./pause.svg);
+        content: url(../../assets/images/pause.svg);
         top: 5%;
       }
     }

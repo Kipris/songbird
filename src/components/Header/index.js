@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.scss';
-import logo from './sb_logo.svg';
+import logo from '../../assets/images/sb_logo.svg';
 import QuestionList from './question-list';
 
 const Header = ({ score, currentGroupId }) => {
@@ -10,7 +10,7 @@ const Header = ({ score, currentGroupId }) => {
         <div className="logo">
           <img src={logo} alt="Songbird Logo" />
         </div>
-        <h5>Score: {score}</h5>
+        <h5>Счет: {score}</h5>
       </div>
       <QuestionList currentGroupId={currentGroupId} />
     </header>
