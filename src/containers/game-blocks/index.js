@@ -26,7 +26,8 @@ const GameBlocks = ({
       <QuestionBlock 
         correctAnswerId={isRoundGuessed ? correctAnswerId : null}
         groupData={groupData}
-        correctAnswerAudio={groupData[correctAnswerId].audio} />
+        correctAnswerAudio={groupData[correctAnswerId].audio}
+        isRoundGuessed={isRoundGuessed} />
       <Row>
         <Col>
           <VariantsBlock
