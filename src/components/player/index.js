@@ -12,7 +12,6 @@ const Player = React.forwardRef(({ src, hidden = false }, ref) => (
     autoPlayAfterSrcChange={false}
     showJumpControls={false}
     customAdditionalControls={[]}
-    customVolumeControls={[]}
   />
 ))
 

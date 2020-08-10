@@ -1,7 +1,7 @@
 .rhap {
   &_container {
     position: relative;
-    height: 52px;
+    height: 78px;
     padding: 0;
     background-color: transparent;
     box-shadow: none;
@@ -79,4 +79,11 @@
       display: none;
     }
   }
+  &_volume-controls {
+    position: relative;
+    top: 0;
+    right: 0;
+  }
 }
+
+
