@@ -1,13 +1,14 @@
 .rhap {
   &_container {
     position: relative;
-    height: 78px;
+    height: 52px;
     padding: 0;
     background-color: transparent;
     box-shadow: none;
   }
   &_progress-section {
     margin-left: 60px;
+    margin-right: 40px;
   }
   &_progress-container {
     margin: 0;
@@ -40,7 +41,7 @@
     top: 30px;
   }
   &_total-time {
-    right: 0;
+    right: 40px;
     top: 30px;
   }
   &_rewind-button,
@@ -80,10 +81,36 @@
     }
   }
   &_volume-controls {
-    position: relative;
+    position: absolute;
     top: 0;
     right: 0;
   }
+  &_volume-container {
+    position: relative;
+    &:hover .rhap_volume-bar-area {
+      display: block;
+    }
+  }
+  &_volume-button {
+    position: relative;
+    top: 5px;
+    margin-right: 0;
+  }
+  &_volume-bar-area {
+    display: none;
+    width: 50px;
+    position: absolute;
+    top: 17px;
+    right: 32px;
+    &::before {
+      content: '';
+      position: absolute;
+      width: calc(100% + 14px);
+      height: 18px;
+      background-color: #444;
+      left: -7px;
+      top: -7px;
+      border-radius: 8px;
+    }
+  }
 }
-
-

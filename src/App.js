@@ -47,7 +47,7 @@ class App extends PureComponent {
           isRoundGuessed: true,
           sound: correctAudio } : { };
       
-      const incorrectAnswerState = !isAnswerCorrect && !isRoundGuessed ? { sound: incorrectAudio } : {};
+      const incorrectAnswerState = !isAnswerCorrect && !isRoundGuessed ? { sound: incorrectAudio } : { };
       return {
         ...updatedState,
         ...correctAnswerState,

@@ -12,6 +12,7 @@ body {
   text-align: left;
   background-color: #222;
   overflow-x: hidden;
+  min-width: 320px;
 }
 
 code {

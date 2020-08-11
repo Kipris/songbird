@@ -26,3 +26,16 @@
   width: 100%;
   min-width: 100px;
 }
+
+@media (max-width: 570px) {
+  .random-ost {
+    flex-direction: column;
+    img {
+      margin: 0 auto 25px;
+    }
+    .list-group {
+      margin: 0;
+      text-align: center;
+    }
+  }
+}

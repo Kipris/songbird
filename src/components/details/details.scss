@@ -30,7 +30,7 @@
   }
 }
 
-@media (min-width: 993px) {
+@media (min-width: 1201px) {
   .details {
     .card-body {
       margin-bottom: 20px;
@@ -38,14 +38,25 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .details {
+    .card-body {
+      flex-direction: column;
+    }
     img {
       display: block;
       margin: 0 auto 25px;
     }
     .list-group {
       width: 100%;
+    }
+  }
+}
+
+@media (max-width: 570px) {
+  .details {
+    .list-group {
+      text-align: center;
     }
   }
 }

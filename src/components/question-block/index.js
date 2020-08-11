@@ -29,7 +29,7 @@ class QuestionBlock extends PureComponent {
         <Image src={isCorrectAnswer ? data.image : img} rounded />
         <ListGroup>
           <ListGroup.Item>
-            <h3>{isCorrectAnswer ? `"${data.trackName}" из фильма ${data.filmName}` : "******"}</h3>
+            <h3>{isCorrectAnswer ? data.filmName : "******"}</h3>
           </ListGroup.Item>
           <ListGroup.Item>
             <div className="audio-player">

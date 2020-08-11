@@ -29,7 +29,7 @@ const GameBlocks = ({
         correctAnswerAudio={groupData[correctAnswerId].audio}
         isRoundGuessed={isRoundGuessed} />
       <Row>
-        <Col>
+        <Col sm={12} md={6}>
           <VariantsBlock
             src={sound}
             ostData={groupData}
@@ -37,7 +37,7 @@ const GameBlocks = ({
             indicatorClasses={indicatorClasses}
             click={handleChooseOst} />
         </Col>
-        <Col>
+        <Col sm={12} md={6}>
           <Details
             isAnswerChosen={chosenAnswerId}
             ostData={groupData[chosenAnswerId]} />
