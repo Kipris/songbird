@@ -1,5 +1,6 @@
 .DS_Store
 build
+public/Songbird_files
 
 # Dependency directories
 node_modules/

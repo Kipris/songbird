@@ -86,6 +86,7 @@ class App extends PureComponent {
     const resetedSettings = this.getResetedSettings();
     this.setState((state) => ({
       ...state,
+      score: 0,
       currentGroupId: 0,
       ...resetedSettings,
     }));

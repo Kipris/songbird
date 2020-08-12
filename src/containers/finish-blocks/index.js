@@ -4,6 +4,8 @@ import { Jumbotron } from 'react-bootstrap';
 import Button from '../../components/button';
 import Confetti from '../../components/confetti';
 
+import './finish-blocks.scss';
+
 const FinishBlocks = ({
   score,
   maxRoundScore,
@@ -14,7 +16,7 @@ const FinishBlocks = ({
   const maxScore = maxRoundScore * roundsCount;
   if (score === maxScore) {
     return (
-      <Jumbotron>
+      <Jumbotron className="finish-blocks">
         <h1 className="display-3 text-center">
           Поздравлем!
           <span role="img" aria-label="">🎉</span>
@@ -28,7 +30,7 @@ const FinishBlocks = ({
   }
 
   return (
-    <Jumbotron>
+    <Jumbotron className="finish-blocks">
       <h1 className="display-3 text-center">Поздравляем!</h1>
       <p className="lead text-center">
         Вы прошли викторину и набрали {score} из {maxScore} возможных баллов
