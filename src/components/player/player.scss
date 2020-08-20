@@ -1,0 +1,118 @@
+@import '../../assets/global-styles/__color-scheme';
+
+.rhap {
+  &_container {
+    position: relative;
+    height: 52px;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  &_progress-section {
+    margin-left: 60px;
+    margin-right: 40px;
+  }
+  &_progress-container {
+    margin: 0;
+  }
+  &_progress-filled {
+    background: linear-gradient(to right, $secondary-light 0%, $marine 100%);
+  }
+  &_progress-indicator {
+    top: -6px;
+    width: 16px;
+    height: 16px;
+    background-color: grey;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
+  }
+  &_progress-bar-show-download {
+    height: 4px;
+    background-color: rgb(115, 115, 115);
+  }
+  &_download-progress {
+    border-radius: 0;
+    background-color: rgb(115, 115, 115);
+  }
+  &_time {
+    position: absolute;
+    font-size: 11px;
+    color: #d3d3d3;
+  }
+  &_current-time {
+    left: 60px;
+    top: 30px;
+  }
+  &_total-time {
+    right: 40px;
+    top: 30px;
+  }
+  &_rewind-button,
+  &_forward-button {
+    display: none;
+  }
+  &_play-pause-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    border: 2px solid $secondary-light;
+    border-radius: 50%;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &[aria-label="Play"] {
+      &::after {
+        content: url(../../assets/images/play.svg);
+        top: 0;
+      }
+    }
+    &[aria-label="Pause"] {
+      &::after {
+        content: url(../../assets/images/pause.svg);
+        top: 5%;
+      }
+    }
+    svg {
+      display: none;
+    }
+  }
+  &_volume-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  &_volume-container {
+    position: relative;
+    &:hover .rhap_volume-bar-area {
+      display: block;
+    }
+  }
+  &_volume-button {
+    position: relative;
+    top: 5px;
+    margin-right: 0;
+  }
+  &_volume-bar-area {
+    display: none;
+    width: 50px;
+    position: absolute;
+    top: 17px;
+    right: 32px;
+    &::before {
+      content: '';
+      position: absolute;
+      width: calc(100% + 14px);
+      height: 18px;
+      background-color: $primary-light;
+      left: -7px;
+      top: -7px;
+      border-radius: 8px;
+    }
+  }
+}

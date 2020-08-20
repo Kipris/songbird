@@ -1,0 +1,27 @@
+@import '../../../assets/global-styles/__color-scheme';
+
+.navigation {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align: center;
+  li {
+    flex: auto;
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: 0;
+    line-height: 1.25;
+    color: $white;
+    background-color: $secondary;
+    border: 0 solid transparent;
+    text-decoration: none;
+    &.active {
+      background-color: $secondary-light;
+      border-color: $secondary;
+    }
+  }
+}

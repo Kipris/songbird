@@ -1,0 +1,24 @@
+header {
+  flex-direction: column;
+  margin-top: .5rem;
+}
+
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 15px 0;
+}
+
+.logo {
+  line-height: 0;
+  img {
+    width: 200px;
+    height: auto;
+  }
+}
+
+h5 {
+  font-size: 1.2rem;
+  margin: 0 0 0.9rem;
+}

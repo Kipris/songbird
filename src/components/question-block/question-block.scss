@@ -1,0 +1,43 @@
+@import '../../assets/global-styles/__color-scheme';
+
+.random-ost {
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 25px;
+  background-color: #303030;
+  img {
+    width: 200px;
+    height: 155px;
+    object-fit: cover;
+  }
+  .list-group {
+    flex: 1;
+    margin: 0 40px;
+    &-item {
+      border: none;
+      padding: .25rem;
+    }
+    &-item:first-child {
+      border-bottom: 1px solid $primary-light;
+    }
+  }
+}
+
+.audio-player {
+  margin: 10px 40px 8px 0;
+  width: 100%;
+  min-width: 100px;
+}
+
+@media (max-width: 570px) {
+  .random-ost {
+    flex-direction: column;
+    img {
+      margin: 0 auto 25px;
+    }
+    .list-group {
+      margin: 0;
+      text-align: center;
+    }
+  }
+}

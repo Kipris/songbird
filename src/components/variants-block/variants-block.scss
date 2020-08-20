@@ -1,0 +1,31 @@
+@import '../../assets/global-styles/__color-scheme';
+
+.ost-variants {
+  .list-group {
+    &-item:hover {
+      cursor: pointer;
+      background-color: $primary-light;
+    }
+  }
+  span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 15px;
+    border-radius: 50%;
+    transition: .1s;
+    background-color: $primary-light;
+    &.correct {
+      background-color: $secondary-light;
+    }
+    &.incorrect {
+      background-color: $red;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .ost-variants {
+    margin-bottom: 25px;
+  }
+}
