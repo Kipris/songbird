@@ -4,7 +4,7 @@
 	position: absolute;
 }
 
-$colors: (#d13447, #ffbf00, #263672);
+$colors: ($red, $yellow, $purple);
 
 @for $i from 0 through 500 {
 	$w: random(8);

@@ -4,7 +4,7 @@
   .list-group {
     &-item:hover {
       cursor: pointer;
-      background-color: #444;
+      background-color: $primary-light;
     }
   }
   span {
@@ -14,12 +14,12 @@
     margin-right: 15px;
     border-radius: 50%;
     transition: .1s;
-    background-color: #444;
+    background-color: $primary-light;
     &.correct {
-      background-color: #00bc8c;
+      background-color: $secondary-light;
     }
     &.incorrect {
-      background-color: red;
+      background-color: $red;
     }
   }
 }

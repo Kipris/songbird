@@ -22,8 +22,8 @@ const FinishBlocks = ({
           <span role="img" aria-label="">🎉</span>
         </h1>
         <p className="lead text-center">Вы настоящий знаток фильмов!</p>
-        <hr class="my-4" /> 
-        <img class="img-win" src="https://img1.goodfon.ru/wallpaper/nbig/7/76/game-of-thrones-daenerys-7743.jpg" alt="win"></img>
+        <hr className="my-4" /> 
+        <img className="img-win" src="https://img1.goodfon.ru/wallpaper/nbig/7/76/game-of-thrones-daenerys-7743.jpg" alt="win"></img>
         <Confetti />
       </Jumbotron>
     );
@@ -35,7 +35,7 @@ const FinishBlocks = ({
       <p className="lead text-center">
         Вы прошли викторину и набрали {score} из {maxScore} возможных баллов
       </p>
-      <hr class="my-4" /> 
+      <hr className="my-4" /> 
       <Button
         click={handleStartNewGame}>
         Попробовать еще раз!

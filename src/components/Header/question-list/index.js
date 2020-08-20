@@ -4,7 +4,7 @@ import './question-list.scss';
 const QuestionList = ({currentGroupId}) => {
   return (
     <ul className="navigation d-flex">
-      {["Разминка", "Иностранные", "Сериалы", "Мультики", "Игры", "Советские"]
+      {["Разминка", "Иностранные", "Сериалы", "Мультфильмы", "Игры", "Советские"]
         .map((group, id) => (
           <li 
             key={id}

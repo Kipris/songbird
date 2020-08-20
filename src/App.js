@@ -25,11 +25,13 @@ class App extends PureComponent {
       indicatorClasses: new Array(6),
       isRoundGuessed: false,
       sound: '',
+      correctAnswers: [],
+      chosenVariants: [],
     }
   }
 
   handleChooseOst = (id, soundRef) => {
-    const { correctAnswerId, maxRoundScore, indicatorClasses, isRoundGuessed } = this.state;
+    const { correctAnswerId, indicatorClasses, isRoundGuessed, chosenVariants } = this.state;
     const isAnswerCorrect = correctAnswerId === id;
     const updatedClasses = [...indicatorClasses];
     if (!isRoundGuessed) {
@@ -39,30 +41,49 @@ class App extends PureComponent {
       const updatedState = {
         ...state,
         chosenAnswerId: id,
-        triesCount: state.triesCount + 1,
         indicatorClasses: updatedClasses,
+        chosenVariants: state.chosenVariants.concat(id)
       }
-      const correctAnswerState = isAnswerCorrect && !isRoundGuessed ? 
-        { score: state.score + maxRoundScore - state.triesCount,
-          isRoundGuessed: true,
-          sound: correctAudio } : { };
-      
-      const incorrectAnswerState = !isAnswerCorrect && !isRoundGuessed ? { sound: incorrectAudio } : { };
+      if (chosenVariants.indexOf(id) !== -1 || isRoundGuessed) {
+        return updatedState;
+      }
+
+      const stateDependOnAnswer = isAnswerCorrect ? this.getCorrectAnswerState(state) : this.getIncorrectAnswerState(state);
       return {
         ...updatedState,
-        ...correctAnswerState,
-        ...incorrectAnswerState
+        ...stateDependOnAnswer
       }
     }, () => {
-      if (isRoundGuessed) return;
-      soundRef.current.audio.current.play();
+      if (!isRoundGuessed) {
+        soundRef.current.audio.current.play();
+      }
     })
+  }
+
+  getCorrectAnswerState = (state) => {
+    const { maxRoundScore } = this.state;
+    const groupName = state.ostGroups[state.currentGroupId];
+    const groupData = state.ostData[groupName];
+    const { filmName } = groupData[state.correctAnswerId];
+    return {
+      score: state.score + maxRoundScore - state.triesCount,
+      isRoundGuessed: true,
+      triesCount: state.triesCount + 1,
+      sound: correctAudio,
+      correctAnswers: state.correctAnswers.concat(filmName),
+    };
+  }
+
+  getIncorrectAnswerState = (state) => {
+    return {
+      triesCount: state.triesCount + 1,
+      sound: incorrectAudio
+    };
   }
 
   handleGoNextLevel = () => {
     const { currentGroupId, ostGroups } = this.state;
     if (currentGroupId === ostGroups.length) {
-      this.handleCongratulations();
       return;
     }
     const resetedSettings = this.getResetedSettings();
@@ -80,6 +101,7 @@ class App extends PureComponent {
     indicatorClasses: new Array(6),
     isRoundGuessed: false,
     sound: '',
+    chosenVariants: [],
   });
 
   handleStartNewGame = () => {
@@ -88,6 +110,7 @@ class App extends PureComponent {
       ...state,
       score: 0,
       currentGroupId: 0,
+      correctAnswers: [],
       ...resetedSettings,
     }));
   }
@@ -111,7 +134,8 @@ class App extends PureComponent {
   };
 
   renderFinishGameBlocks = () => {
-    const { score, maxRoundScore, ostGroups } = this.state;
+    const { score, maxRoundScore, ostGroups, correctAnswers } = this.state;
+    console.log(`Правильные ответы: ${correctAnswers.split(', ')}`);
     return (
       <FinishBlocks
         score={score}
@@ -124,7 +148,6 @@ class App extends PureComponent {
   
   render() {
     const { score, currentGroupId, ostGroups } = this.state;
-    console.log(this.state);
     return (
       <Container>
         <Header
