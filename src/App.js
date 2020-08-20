@@ -135,7 +135,7 @@ class App extends PureComponent {
 
   renderFinishGameBlocks = () => {
     const { score, maxRoundScore, ostGroups, correctAnswers } = this.state;
-    console.log(`Правильные ответы: ${correctAnswers.split(', ')}`);
+    console.log(`Правильные ответы: ${correctAnswers}`);
     return (
       <FinishBlocks
         score={score}
